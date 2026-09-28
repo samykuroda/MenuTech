@@ -1,0 +1,51 @@
+# ============ ↳ 𐔌  PROJETO MENUTECH 𐔌 ==========
+import os
+os.system("cls")
+import json
+
+def salvar_item(cardapio):
+    with open("acervo.json", "w", encoding="utf-8") as arquivo:
+        json.dump(cardapio, arquivo, ensure_ascii=False, indent=4)
+
+cardapio = [] 
+      
+while True:
+    os.system("cls")
+    print("=" * 35)
+    print(""" 
+    MENU PRINCIPAL
+          
+    1- Adicionar item no cardápio 
+    2- Consultar cardápio
+    3- Registrar pedido da mesa
+    4- Consultar pedido da mesa
+    5- Fechar conta
+    """)
+    print("=" * 35)
+    opcao = int(input("Digite o número da opção desejada: "))
+    
+    match opcao:
+        case 1:
+            os.system("cls")
+            item = input("Digite o nome do produto: ").lower()
+            preco = float(input("Insira o preço do produto: "))
+            codigo = int(input("Insira o código único e numérico do produto: "))
+            produto = {
+                "item": item,
+                "preco": preco,
+                "codigo": codigo
+            }
+            cardapio.append(produto)
+            salvar_item(cardapio)
+            input("ENTER para voltar para o menu...")
+        case 2:
+            ...
+        case 3:
+            ...
+        case 4:
+            ...
+        case 5:
+            ...
+        case _:
+            print("Digite uma opção válida!")
+            opcao = int(input("Digite o número da opção desejada: "))
