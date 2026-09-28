@@ -7,8 +7,16 @@ def salvar_item(cardapio):
     with open("cardapio.json", "w", encoding="utf-8") as arquivo:
         json.dump(cardapio, arquivo, ensure_ascii=False, indent=4)
 
-cardapio = [] 
-      
+def carregarCardapio():
+    try:
+        with open("cardapio.json", "r", encoding="utf-8") as arquivo:
+            return json.load(arquivo)
+    except FileNotFoundError:
+        return []
+    
+cardapio = carregarCardapio() 
+mesas = []
+
 while True:
     os.system("cls")
     print("=" * 35)
@@ -27,7 +35,7 @@ while True:
     match opcao:
         case 1:
             os.system("cls")
-            item = input("Digite o nome do produto: ").lower()
+            item = input("Digite o nome do produto: ").upper()
             preco = float(input("Insira o preço do produto: "))
             codigo = int(input("Insira o código único e numérico do produto: "))
             produto = {
@@ -39,7 +47,11 @@ while True:
             salvar_item(cardapio)
             input("ENTER para voltar para o menu...")
         case 2:
-            ...
+            os.system("cls")
+            print("ITENS CADASTRADOS: ")
+            for item in cardapio:
+                print(f"Nome do produto: {item["item"]} | COD: {item["codigo"]} | Preço: {item["preco"]}")
+            input("ENTER para voltar para o menu...")
         case 3:
             ...
         case 4:
