@@ -4,7 +4,7 @@ os.system("cls")
 import json
 
 def salvar_item(cardapio):
-    with open("acervo.json", "w", encoding="utf-8") as arquivo:
+    with open("cardapio.json", "w", encoding="utf-8") as arquivo:
         json.dump(cardapio, arquivo, ensure_ascii=False, indent=4)
 
 cardapio = [] 
