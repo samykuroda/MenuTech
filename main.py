@@ -37,7 +37,7 @@ while True:
             os.system("cls")
             item = input("Digite o nome do produto: ").upper()
             preco = float(input("Insira o preço do produto: "))
-            codigo = int(input("Insira o código único e numérico do produto: "))
+            codigo = len(cardapio) + 1
             produto = {
                 "item": item,
                 "preco": preco,
