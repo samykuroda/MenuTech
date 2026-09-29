@@ -123,7 +123,18 @@ while True:
             input("Aperte ENTER para voltar ao menu")
  
         case 5:
-            ...
+            os.system("cls")
+            num_mesa = int(input("Digite o número da mesa: "))
+            if num_mesa in mesas and mesas[num_mesa]["status"] == "aberta":
+                print(f"--- MESA {num_mesa} ---")
+                for item in mesas[num_mesa]["pedidos"]:
+                    print(f"  - {item['qtd']}x {item['item']} = R$ {item['subtotal']:.2f}")
+                print(f"  TOTAL: R$ {mesas[num_mesa]['total']:.2f}")
+                mesas[num_mesa]["status"] = "fechada"
+                print("Conta fechada com sucesso!")
+            else:
+                print("Essa mesa não está aberta.")
+            input("Aperte ENTER para voltar ao menu...")
         case _:
             print("Digite uma opção válida!")
             input("Aperte ENTER para continuar...")
