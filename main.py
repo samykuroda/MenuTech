@@ -15,7 +15,7 @@ def carregarCardapio():
         return []
     
 cardapio = carregarCardapio() 
-mesas = []
+mesas = {}
 
 while True:
     os.system("cls")
@@ -25,7 +25,7 @@ while True:
           
     1- Adicionar item no cardápio 
     2- Consultar cardápio
-    3- Registrar pedido da mesa
+    3- Abrir mesa e adicionar pedido
     4- Consultar pedido da mesa
     5- Fechar conta
     """)
@@ -49,15 +49,58 @@ while True:
         case 2:
             os.system("cls")
             print("ITENS CADASTRADOS: ")
-            for item in cardapio:
-                print(f"Nome do produto: {item["item"]} | COD: {item["codigo"]} | Preço: {item["preco"]}")
+            if not cardapio:
+                print("Nenhum item cadastrado ainda.")
+            else:
+                for item in cardapio:
+                    print(f"Nome do produto: {item["item"]} | COD: {item["codigo"]} | Preço: {item["preco"]}")
+            print()
             input("ENTER para voltar para o menu...")
         case 3:
-            ...
+            if num_mesa not in mesas or mesas[num_mesa]["status"] == "fechada":
+                num_mesa = int(input("Digite o número da mesa: "))
+                mesas[num_mesa] = {
+                        "status": "aberta",
+                        "pedidos": [],
+                        "total": 0.0
+                    }
+                print("Mesa aberta com sucesso!")
+            else:
+                print(f"Adicionando novos pedidos na Mesa {num_mesa} (já aberta).\n")
+            
+            while True:
+                if mesas[num_mesa]["pedidos"] == []:                
+                    item_mesa = int(input("Digite o código do produto: "))
+                    qtd = int(input("Quantidade: "))
+                    item_encontrado = False
+
+                    for item in cardapio:    
+                        if item_mesa == item["codigo"]:
+                            subtotal = item["preco"] * qtd
+                                        
+                            novo_item = {
+                            "item": item["item"],
+                            "preco": item["preco"],
+                            "qtd": qtd,
+                            "subtotal": subtotal
+                    }
+                            mesas[num_mesa]["pedidos"].append(novo_item)
+                            mesas[num_mesa]["total"] += subtotal
+                            print(f"-> Adicionado: {qtd} x {item['item']} (R$ {subtotal:.2f})")
+                            item_encontrado = True
+                            break
+                        
+                    if not item_encontrado:
+                        print("Código de produto inválido!")
+                    
+                    continuar = input("\nDeseja adicionar mais itens nesta mesa? (s/n): ").lower()
+                    if continuar != 's':
+                        input("Digite ENTER para voltar ao menu")   
+                        break  
         case 4:
             ...
         case 5:
             ...
         case _:
             print("Digite uma opção válida!")
-            opcao = int(input("Digite o número da opção desejada: "))
+            input("Aperte ENTER para continuar...")
