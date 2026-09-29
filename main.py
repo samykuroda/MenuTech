@@ -105,7 +105,23 @@ while True:
                         input("Digite ENTER para voltar ao menu")   
                         break  
         case 4:
-            ...
+            print(f"--- MESAS ABERTAS ---")
+            mesa_aberta = False
+            for numero, dados in mesas.items():
+                if dados["status"] == "aberta":
+                    mesa_aberta = True
+                    print(f"\n--- MESA {numero} ---")
+                    if len(dados["pedidos"]) == 0:
+                        print("  (Nenhum pedido lançado)")
+                    else:
+                        for item in dados["pedidos"]:
+                            print(f"  - {item['qtd']}x {item['item']} = R$ {item['subtotal']:.2f}")
+                    print(f"  TOTAL: R$ {dados['total']:.2f}")
+            if not mesa_aberta:
+                print("\nNenhuma mesa aberta no momento.")
+            print("==============================\n")
+            input("Aperte ENTER para voltar ao menu")
+ 
         case 5:
             ...
         case _:
