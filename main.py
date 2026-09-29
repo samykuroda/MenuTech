@@ -2,11 +2,11 @@
 import os
 os.system("cls")
 import json
-
+ 
 def salvar_item(cardapio):
     with open("cardapio.json", "w", encoding="utf-8") as arquivo:
         json.dump(cardapio, arquivo, ensure_ascii=False, indent=4)
-
+ 
 def carregarCardapio():
     try:
         with open("cardapio.json", "r", encoding="utf-8") as arquivo:
@@ -16,7 +16,7 @@ def carregarCardapio():
     
 cardapio = carregarCardapio() 
 mesas = {}
-
+ 
 while True:
     os.system("cls")
     print("=" * 35)
@@ -53,12 +53,14 @@ while True:
                 print("Nenhum item cadastrado ainda.")
             else:
                 for item in cardapio:
-                    print(f"Nome do produto: {item["item"]} | COD: {item["codigo"]} | Preço: {item["preco"]}")
+                    print(f"Nome do produto: {item['item']} | COD: {item['codigo']} | Preço: {item['preco']}")
             print()
             input("ENTER para voltar para o menu...")
         case 3:
+            os.system('cls')
+            num_mesa = int(input("Digite o número da mesa: "))
+            
             if num_mesa not in mesas or mesas[num_mesa]["status"] == "fechada":
-                num_mesa = int(input("Digite o número da mesa: "))
                 mesas[num_mesa] = {
                         "status": "aberta",
                         "pedidos": [],
@@ -69,11 +71,16 @@ while True:
                 print(f"Adicionando novos pedidos na Mesa {num_mesa} (já aberta).\n")
             
             while True:
-                if mesas[num_mesa]["pedidos"] == []:                
+                if len(cardapio) == 0:
+                    print("O cardápio está vazio! Cadastre produtos no Menu 1 primeiro.")
+                    input("Digite ENTER para voltar ao menu principal...")
+                    break
+ 
+                else:                
                     item_mesa = int(input("Digite o código do produto: "))
                     qtd = int(input("Quantidade: "))
                     item_encontrado = False
-
+ 
                     for item in cardapio:    
                         if item_mesa == item["codigo"]:
                             subtotal = item["preco"] * qtd
@@ -104,3 +111,4 @@ while True:
         case _:
             print("Digite uma opção válida!")
             input("Aperte ENTER para continuar...")
+ 
